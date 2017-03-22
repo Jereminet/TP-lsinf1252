@@ -34,3 +34,12 @@ QUESTION 7:
 -----------
 
 12 wait() et 13 post(), du coup on passe de 0 à -12 puis à 1 (0-12+13).
+
+
+
+
+
+Mutex : 1 par 1
+Semaphore : plusieurs à la fois
+
+Un mutex est comme un semaphore initialisé a 1.
