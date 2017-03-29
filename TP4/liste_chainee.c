@@ -19,14 +19,14 @@ void reverse(node **list){
 }
 
 node *append(node *a, node *b){
+	if(a==NULL)
+	    return b;
 	struct node *res = a;
 	struct node *current =res;
-	while(current!=NULL){
-		current=current->next;
+	while(current->next!=NULL){
+      		current=current->next;
 	}
-	current=b;
-	b=NULL;
-	a=NULL;
+	current->next=b;
 	return res;
 }
 
@@ -49,3 +49,4 @@ void split(node *list, node **first_half, node **second_half){
 	*first_half=temp;
 	list=NULL;
 }
+

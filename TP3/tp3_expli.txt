@@ -16,3 +16,5 @@
    privilégier la passage par argument d'un pointeur, cela permet de créer plusieurs stacks de manière
    dynamique.
 
+9) préciser gcc -g ex.c -o ex
+   préciser "print VARIABLE" pour avoir la valeur de la variable au moment de l'exécution
