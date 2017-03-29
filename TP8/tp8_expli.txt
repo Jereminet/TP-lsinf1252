@@ -1,0 +1,161 @@
+QUESTION 1:
+-----------
+
+Mémoire insuffisante ou nombre de processus max autorisé par le CPU atteint.
+
+Ex : boucle infinie avec fork() à l'intérieur
+
+QUESTION 2:
+-----------
+
+Pas de processus fils 
+
+Ex : création d'un programme sans fork() et faire appel à wait()
+
+QUESTION 3:
+-----------
+
+Valeur de retour à chaque fois identique, impossible de discerner les differents enfants
+Problème lors de l'utilisation de waitpid() qui demande l'id d'un fils. On ne pourra plus utiliser
+seulement wait(), et on ne pourra du coup pas spécifier un ordre pour l'execution de processus. Ce 
+sera à chaque fois le premier, puis le suivant, etc...
+
+QUESTION 4:
+-----------
+
+3 processus sont créés, donc il y en a 4 au total (le processus père n'est pas compté, c'est
+justement lui qui fait le premier appel à fork().
+A noter qu'on ne peut pas faire d'anticipation sur qui du processus père ou fils terminera le 2e 
+appel à fork() en premier.
+
+QUESTION 5:
+-----------
+
+L'ordre peut varier, on peut donc avoir
+
+               1252
+               /  \
+              /    \
+            1253   1255
+              |
+            1254
+
+ou
+
+               1252
+               /  \
+              /    \
+            1253   1254
+              |
+            1255
+
+QUESTION 6:
+-----------
+
+On va atteindre la limite max de processus accepté par l'OS.
+
+Solution:
+Limiter le nombre de processus qu'un utilisateur peut créer (sur Linux : ulimit -u 30)
+
+QUESTION 7:
+-----------
+
+fork : 
+
+real	0m5.823s
+user	0m0.056s
+sys	0m1.784s
+
+thread :
+
+real	0m1.139s
+user	0m0.164s
+sys	0m0.428s
+
+
+Thread plus rapide pcq nécessité de copier seulement la stack (et le contexte), le reste est
+partagé entre les threads.
+
+Processus plus lent pcq nécessité de tout copier, après chaque processus part de son côté. Une
+modification d'un variable dans un processus fils ne modifiera pas la même variable dans le 
+processus père (et inversement).
+
+--> Plus de copie pour les processus que pour les threads
+--> De manière générale, les processus sont plus lourds que les threads
+
+QUESTION 8:
+-----------
+
+$ ./fork-zombie
+pid du zombie: 5453
+fork: Success
+
+$ ps -h
+ 2934 pts/1    Ss     0:00 bash
+ 5394 pts/18   Ss     0:00 bash
+ 5452 pts/1    S+     0:00 ./fork-zombie             //ligne 1
+ 5453 pts/1    Z+     0:00 [fork-zombie] <defunct>   //ligne 2
+ 5454 pts/18   R+     0:00 ps -h                     //ligne 3
+
+La ligne 1 correspond au processus père qui s'exécute et qui attend 50 sec.
+La ligne 2 correspond au processus fils qui a terminé de s'exécuter (il est donc "mort") mais
+il est gardé en mémoire jusqu'à l'appel à waitpid() du processus père (il devient un "zombie").
+La ligne 3 correspond tout simplement au processus courant, qui est l'appel à ps -h.
+
+QUESTION 9:
+-----------
+
+system prend une commande en paramètre et exécute la commande
+
+Appels systèmes : execve(), fork(), ...
+
+QUESTION 10:
+------------
+
+pthread_create / fork :
+-création de thread / processus
+
+pthread_join / waitpid :
+-attente qu'un thread / processus se termine
+             (retval) / (code de retour)
+
+QUESTION 11:
+------------
+
+jeremy@jeremy-N551VW:~/Documents/UCL/Info/TP/TP8$ strace -c ls
+fork-perf  fork-perf.c	fork-zombie  fork-zombie.c  pthread-perf  pthread-perf.c  tp8_expli.txt
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000026           1        19           mmap
+  0.00    0.000000           0         7           read
+  0.00    0.000000           0         1           write
+  0.00    0.000000           0         9           open
+  0.00    0.000000           0        11           close
+  0.00    0.000000           0        10           fstat
+  0.00    0.000000           0        12           mprotect
+  0.00    0.000000           0         1           munmap
+  0.00    0.000000           0         3           brk
+  0.00    0.000000           0         2           rt_sigaction
+  0.00    0.000000           0         1           rt_sigprocmask
+  0.00    0.000000           0         2           ioctl
+  0.00    0.000000           0         7         7 access
+  0.00    0.000000           0         1           execve
+  0.00    0.000000           0         2           getdents
+  0.00    0.000000           0         1           getrlimit
+  0.00    0.000000           0         2         2 statfs
+  0.00    0.000000           0         1           arch_prctl
+  0.00    0.000000           0         1           set_tid_address
+  0.00    0.000000           0         1           set_robust_list
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000026                    94         9 total
+
+QUESTION 12:
+------------
+
+trouver
+
+gnome-terminal-─┬─bash───pstree
+        │         │         │         │                 ├─{dconf worker}
+        │         │         │         │                 ├─{gdbus}
+        │         │         │         │                 └─{gmain}
+
