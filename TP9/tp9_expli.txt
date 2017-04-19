@@ -1,0 +1,99 @@
+QUESTION 1:
+-----------
+
+(voir les permissions avec ls -l)
+
+r : read
+w : write
+x : execution en tant qu'executable, savoir si on peut faire une recherche 
+   dessus dans le cas d'un repertoire
+
+EXEMPLE:
+lire+rechercher pour proprio
+lire+rechercher pour membres du groupe
+seulement lire pour tout autre
+
+--> dr-xr-xr--  == 0554 en octal(groupe de bits par 3,successivement le proprio, membres du groupe
+a qui appartient le fichier (par defaut proprio), tous les autres)
+On a donc r-x/r-x/r--
+          101/101/100 (se lit en base 2, soit 2²,2¹,2⁰)
+          
+
+QUESTION 2:
+-----------
+
+Création d'un bete fichier txt avec permission 664 (touch_file). Pour passer les permissions à 600
+par exemple, suffit de faire chmod 600 FILENAME.
+Pour changer proprio ou groupe, chowr (pour change owner).
+
+QUESTION 3:
+-----------
+
+Creation de repertoire avec mkdir (permission 755)
+Pour changer en lire pour groupe et rien pour tous les autres, nécessité de passer à 640. Pour ce 
+faire, utiliser aussi chmod.
+
+QUESTION 4:
+-----------
+
+Permission de tmp : drwxrwxrwt
+
+Pour ce qui est du "t" supplémentaire, la main page nous dit:
+The restricted deletion flag or sticky bit is a single bit, whose interpretation depends on the 
+file type. For directories, it prevents unprivileged users from removing or renaming a file in the 
+directory unless they own the file or the directory; this is called the restricted deletion flag
+for the directory, and is commonly found on world-writable directories like /tmp. For regular files
+on some older systems, the bit saves the program's text image on the swap device so it will load 
+more quickly when run; this is called the sticky bit.
+
+QUESTION 5:
+-----------
+
+LSOF pour "list of open files" qui se trouvent dans /proc qui maintient les informations relatives
+aux processus (entre autre les fd,file descriptor).
+
+QUESTION 6:
+-----------
+
+Les descripteurs 0,1 et 2 constituent les entrées standard. Donc si par exemple open nous renvoit
+3, cela signifie que précédemment, il n'y avait aucun fichier ouvert. (Les descripteurs sont listés
+dans l'ordre croissant dans la table des descripteurs de fichiers).
+
+QUESTION 7:
+----------
+
+Oui c'est possible, "mise à jour" de la lecture du fd2 lors de l'écriture de fd1.
+Valeur des descripteurs : fd1=3 et fd2=4
+
+QUESTION 8:
+-----------
+
+Ne se fait pas avec les pipes puisqu'ici on cherche une interaction entre processus et fichier.
+
+fork()
+close(1) // stdout
+open()
+execve()
+
+QUESTION 10:
+------------
+
+Utilisation de pipe (gérer sortie du cat et entrée du grep)
+
+QUESTION 11:
+------------
+
+open + dup
+
+QUESTION 12:
+------------
+
+Si write retourne -1, erreur. Ensuite regarder errno. Dans ce cas-ci, ce sera ENOSPC au lieu de
+EIO, erreur d'entrée/sortie standard.
+
+QUESTION 13:
+-----------
+
+Ecriture sur le disque dans le buffer est rempli puis le vide.
+
+Très utile dans le cas d'une clef USB.
