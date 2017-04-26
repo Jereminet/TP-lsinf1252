@@ -1,0 +1,74 @@
+QUESTION 1:
+-----------
+
+513*63 = 2¹⁵ bytes par piste
+7200 pistes lues par minute, soit 120 pistes par seconde
+
+On a donc 2¹⁵ bytes/piste * 120 piste/sec = 3*10⁶ bytes/sec, soit 3MBytes/sec
+
+On nous dit qu'on peut aller jusque 300 MBytes/sec alors qu'on trouve seulement 3MB/s. Cela
+s'explique parce qu'on ne prend pas en compte le cache.
+
+(Pour calculer plus facilement, spécifiez les unités et simplifiez : bytes/piste * piste/sec =
+ bytes/sec, donc ce qu'on cherche)
+
+QUESTION 2:
+-----------
+
+Une page fait 1024 bytes = 2¹⁰ bytes et les adresses sont encodées sur 13 bits. 
+Besoin de 10 bits pour representer une adresse (=l'offset) et les 3 premiers referencent donc
+à l'indice de la page.
+
+Imaginons que la table utilise 8 bytes(=2³) et pas 1024, on aura donc besoin de 3 bits pour
+representer l'adresse et 10 bits pour l'indice de la page.
+
+Par la table, on sait que pour
+110 0110111010 : soit les bits de poids forts 110, de validité true donc les données sont bien
+sur la mémoire et l'adresse physique correspond à 000 + offset, soit 0110111010. L'adresse physique
+est donc 0000110111010.
+
+011 0000110010 : données bien en mémoire, adresse physique = 0110000110010
+
+000 0010010001 : données bien en mémoire, adresse physique = 1000010010001
+
+100 0010001001 : données PAS en mémoire, adresse pas représentée physiquement. Segmentation
+fault lors de la lecture et création d'une page lors de l'écriture.
+
+000 0000000000 : données en mémoire, adresse physique = 1000000000000
+
+(Utile à retenir : 1024=2¹⁰ , 1Mllion = 2²⁰ et 1Mllrd = 2³⁰)
+
+QUESTION 4:
+-----------
+
+4096 bytes=2¹² bytes, pour une adresse virtuelle, on a donc 12 bits d'offset et 20 d'indice
+de page et pour l'adresse physique, on a 12 bits d'offset et 14 d'indice.
+
+On a donc 2²⁰ entrées dans la table des pages.
+
+La taille de la table des pages vaut donc 2²⁰*32 bits (vu qu'une entrée occupe 32 bits)
+
+A noter que dans la table des pages, on ne note pas l'indice virtuelle vu que cela correspond
+à un indice, il suffit juste de se rendre directement au bon endroit. Du coup, on nous dit
+que une entrée de la table fait 32 bits alors qu'en réalité c'est plutôt 14 bits d'indice 
+physique + bit de validité, de permission, de référence,etc..
+
+Si la taille de l'adresse physique augmente, cela ne changera pas le nombre d'entrées dans la
+table des pages. Ce qui se passe lors du passage de 26 à 36 bits, c'est l'augmentation de la
+taille de l'indice physique, qui passe de 14 à 24 bits, ce qui augmente donc la taille d'une
+entrée et donc la taille de la table des pages.
+
+Par contre, si on augmente la taille d'une adresse virtuelle, la taille d'une entrée ne
+change pas vu qu'on ne stocke pas l'indice virtuelle mais le nombre d'entrées varient, 
+passant par exemple de 2²⁰ à 2³⁰ lors d'un passage de 32 à 42 bits pour l'adresse virtuelle.
+Et par conséquent, la taille de la augmentera aussi et passera de 2²⁰*32 à 2³⁰*32 bits.
+
+QUESTION 5:
+-----------
+
+Mémoire RAM = mémoire physique
+Le fait d'avoir 32GB agrandit la taille d'une adresse physique, qui passe à 35 bits.
+On a donc plus d'adresse virtuelle que physique
+
+12 bits d'offset, il y a donc 2⁵² entrées.
+
