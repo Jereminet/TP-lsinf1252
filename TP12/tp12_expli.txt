@@ -1,0 +1,71 @@
+QUESTION 1:
+-----------
+La fonction signal permet d'assigner à une valeur de signal une certaine fonction de traitement(handler).
+Il renvoie l'ancien handler associé au signal passé en argument et associe au signal la fonction passé en 2e argument.
+Lorsqu'un processus recoit un signal, soit il l'ignore soit il fait qq chose,cad execute la fonction associé au handler.
+
+EX : Imaginons qu'au signal SIG_INT(=signum dans la fct signal) soit associé la méhode bar, alors l'appel à signal(SIG_INT,foo)
+renvoie bar, et désormais la fonction handler associé à SIG_INT est foo.
+
+QUESTION 2:
+-----------
+
+signal(SIGKILL,SIG_IGN) revient à demander d'ignorer le signal SIGKILL.
+Cela revient à faire un signal inarrêtable.
+
+QUESTION 3:
+-----------
+
+Faire l'appel signal(SIG_INT,SIG_IGN);
+
+QUESTION 4:
+-----------
+
+Si entre ces 2 lignes 
+ alarm(5);
+  int r=read(STDIN_FILENO,&c,1);
+l'OS nous fait attendre plus de 5 sec, il va y avoir un problème.
+
+La solution proposée par l'étudiant est correcte, meme si celle proposée
+dans le syllabus est meilleure (à base de longjmp).
+
+QUESTION 5:
+-----------
+
+SIGSYS : appel systeme avec mauvais argument 
+SIGPIPE : essayer d'écrire sur la sortie standard alors qu'elle n'est pas disponible ou fermée
+
+QUESTION 6:
+-----------
+
+SIGCHLD : processus fils à terminé son exécution
+Utile pour réveiller le processus père dont un des fils vient de mourir.
+
+Pour savoir quand le processus fils a terminé son execution, on joue à la base avec les id (waitpid).
+
+QUESTION 7:
+-----------
+
+Il y a interruption du handler en cours.
+
+QUESTION 8:
+-----------
+
+cf. syllabus
+
+QUESTION 9:
+-----------
+
+-l'OFO et son fd sont copiés pour le fils
+-ils peuvent chacun lire de manière indépendante
+-ils gardent les permissions qu'ils ont eu à l'ouverture du fichier, mais si le fichier est fermé et ré-ouvert, alors ils ne peuvent plus lire
+-le père non mais le fils oui vu que le descripteur a été copié
+-oui jusqu'à ce que le dernier lien vers ce fichier subsiste, après quoi le fichier est supprimé
+
+QUESTION 10:
+------------
+
+Sémaphores stockées dans l'OS.
+
+Si on fait sem_close(), le sémaphore n'est plus accessible pour le père et le fils alors que sem_unlink() retire l'accès par
+le processus qui effectue l'appel.
