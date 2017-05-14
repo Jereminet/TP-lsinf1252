@@ -25,6 +25,8 @@ Si entre ces 2 lignes
  alarm(5);
   int r=read(STDIN_FILENO,&c,1);
 l'OS nous fait attendre plus de 5 sec, il va y avoir un problème.
+Le boolean global ne sert à rien car si on entre dans le read et qu’on 
+y reste plus de 5 secondes, on ne va pas revérifier la condition.
 
 La solution proposée par l'étudiant est correcte, meme si celle proposée
 dans le syllabus est meilleure (à base de longjmp).
@@ -32,8 +34,11 @@ dans le syllabus est meilleure (à base de longjmp).
 QUESTION 5:
 -----------
 
-SIGSYS : appel systeme avec mauvais argument 
-SIGPIPE : essayer d'écrire sur la sortie standard alors qu'elle n'est pas disponible ou fermée
+SIGSYS : appel systeme avec mauvais argument à une fonction, en pratique 
+le compilateur le voit sauf pour les appels systèmes.
+SIGPIPE : essayer d'écrire sur la sortie standard alors qu'elle n'est pas disponible ou fermée.
+Egalement pour quand un pipe est cassé ou quand on écrit dans un pipe et que personne ne le lit. 
+En pratique deux processus père et fils, le fils lit, le père écrit, si le fils se crash et que le père continue à écrire. Ou bien dans le shell si on fait cat file.txt | ./buggy et que ./buggy qui lit se crash.
 
 QUESTION 6:
 -----------
@@ -53,19 +58,25 @@ QUESTION 8:
 
 cf. syllabus
 
+NOTE : à ne jamais faire ! On copie la valeur de errno avant l’exécution du write 
+dans une variable locale sur la pile et après l’exécution du write, on remet la valeur de errno à cette valeur là au cas où errno aurait été changé pendant le write
+
 QUESTION 9:
 -----------
+
+Si on peut ouvrir et fermer sur plusieurs processus, pourquoi ne pourrait-on pas 
+ouvrir et fermer sur un seul processus ? Donc la réponse est oui
+
+Sémaphores stockées dans l'OS.
+
+Si on fait sem_close(), le sémaphore n'est plus accessible pour le père et le fils alors que sem_unlink() retire l'accès par
+le processus qui effectue l'appel.
+
+QUESTION 10:
+------------
 
 -l'OFO et son fd sont copiés pour le fils
 -ils peuvent chacun lire de manière indépendante
 -ils gardent les permissions qu'ils ont eu à l'ouverture du fichier, mais si le fichier est fermé et ré-ouvert, alors ils ne peuvent plus lire
 -le père non mais le fils oui vu que le descripteur a été copié
 -oui jusqu'à ce que le dernier lien vers ce fichier subsiste, après quoi le fichier est supprimé
-
-QUESTION 10:
-------------
-
-Sémaphores stockées dans l'OS.
-
-Si on fait sem_close(), le sémaphore n'est plus accessible pour le père et le fils alors que sem_unlink() retire l'accès par
-le processus qui effectue l'appel.
