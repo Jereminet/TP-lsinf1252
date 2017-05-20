@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+int main() {
+    int n = 208;
+    printf("n&1 = %d\n",n|1);
+    int count = 1;
+    while(((n&1)%2)!=1){
+    	n=n>>1;
+        count=count*2;
+    }
+    printf("Valeur de count : %d \n",count);
+}
