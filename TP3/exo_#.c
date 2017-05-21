@@ -15,9 +15,9 @@ struct vector_t * init(int i, float f)
     vecteur->size = i;
     
     float *temp = (float *)malloc(sizeof(float));
-	if(temp==NULL){
-		exit(EXIT_FAILURE);
-	}
+    if(temp==NULL){
+	exit(EXIT_FAILURE);
+    }
     
     int j;
     for(j=0; j<i; j++) {
