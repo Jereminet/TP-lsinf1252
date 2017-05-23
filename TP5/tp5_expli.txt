@@ -64,7 +64,7 @@ global: 1523725
 global: 1291945
 global: 1327637
 
-Deux threads s'executent à chaque fois, il se peut donc qu'ils fassent appel
+4 threads s'executent à chaque fois, il se peut donc qu'ils fassent appel
 exactement au meme temps à func, ce qui fait que la variable commune globale 
 n'est en réalité incrémentée qu'une fois, ce qui explique que la valeur finale
 de globale soit inférieure à 2*1 000 000.
