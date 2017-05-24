@@ -19,14 +19,36 @@
 pthread_t phil[PHILOSOPHES];
 sem_t baguette[PHILOSOPHES];
 
-
-pthread_t evolution; 
-
 void mange(int id) {
   printf("Philosophe [%d] mange\n",id);
   for(int i=0;i< rand(); i++) {
     // philosophe mange
   }
+}
+
+void *check_time(void *param){
+    int sval1;
+    int sval2;
+    int sval3;
+    int res1;
+    int res2;
+    int res3;
+    while(true){
+        sem_getvalue(&baguette[0],&sval1);
+        sem_getvalue(&baguette[1],&sval2);
+        sem_getvalue(&baguette[2],&sval3);
+        res1=sval1;
+        res2=sval2;
+        res3=sval3;
+        sleep(10);
+        sem_getvalue(&baguette[0],&sval1);
+        sem_getvalue(&baguette[1],&sval2);
+        sem_getvalue(&baguette[2],&sval3);
+        if(res1==sval1 && res2==sval2 && res3==sval3){
+            printf("Sémaphores ne sont pas modifiées \n");
+            exit(EXIT_FAILURE);
+        }
+    }
 }
 
 void* philosophe ( void* arg )
@@ -62,11 +84,17 @@ int main ( int argc, char *argv[])
    for (i = 0; i < PHILOSOPHES; i++)
      sem_init( &baguette[i], 0 , 1);
 
-   for (i = 0; i < PHILOSOPHES; i++)
+   for (i = 0; i < PHILOSOPHES; i++){
      pthread_create(&phil[i], NULL, philosophe, (void*)&(id[i]) );
+   }
 
-   for (i = 0; i < PHILOSOPHES; i++)
+  pthread_t checktime;
+   pthread_create(&checktime,NULL,check_time,NULL);
+
+   for (i = 0; i < PHILOSOPHES; i++){
       pthread_join(phil[i], NULL);
+   }
 
+    pthread_join(checktime,NULL);
    return (EXIT_SUCCESS);
 }
