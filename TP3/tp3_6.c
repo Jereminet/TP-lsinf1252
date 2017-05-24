@@ -20,5 +20,8 @@ int main(int argc,char *argv[]){
 //taille de 24 au lieu de 11 pcq les variables sont alignés sur 8 bytes pour
 //éviter qu'un long empiète sur 2 espaces mémoires
 
+//si on reorganise la structure en mettant par exemple long,short puis char, alors la taille 
+//vaut 11 et s'aligne donc sur le plus proche multiple de 8, soit 16 (au lieu de 24)
+
 //packed permet d'optimiser l'organisation de la structure (la taille 
 //passe donc à 11)
