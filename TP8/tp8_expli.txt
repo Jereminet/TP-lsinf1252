@@ -24,7 +24,7 @@ QUESTION 4:
 -----------
 
 3 processus sont créés, donc il y en a 4 au total (le processus père n'est pas compté, c'est
-justement lui qui fait le premier appel à fork().
+justement lui qui fait le premier appel à fork()).
 A noter qu'on ne peut pas faire d'anticipation sur qui du processus père ou fils terminera le 2e 
 appel à fork() en premier.
 
@@ -55,7 +55,11 @@ QUESTION 6:
 On va atteindre la limite max de processus accepté par l'OS.
 
 Solution:
-Limiter le nombre de processus qu'un utilisateur peut créer (sur Linux : ulimit -u 30)
+Limiter le nombre de processus qu'un utilisateur peut créer (sur Linux : ulimit -u 30).
+
+NB : Par défaut, Linux ne copie pas immédiatement un processus et sa mémoire, mais
+ne copie que lorsqu’on modifie la mémoire (copy on write) ; du coup, ça ralentit les accidents
+mais c’est quand même dangereux.
 
 QUESTION 7:
 -----------
