@@ -94,6 +94,6 @@ EIO, erreur d'entrée/sortie standard.
 QUESTION 13:
 -----------
 
-Ecriture sur le disque dans le buffer est rempli puis le vide.
+Ecriture sur le disque seulement quand le buffer est rempli, après quoi il est vidé.
 
 Très utile dans le cas d'une clef USB.

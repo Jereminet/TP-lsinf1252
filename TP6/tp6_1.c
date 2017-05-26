@@ -13,7 +13,7 @@ void * fun(void *arg){
 
 void foo(void){
 	int local=0;
-	int static_local=0; //valeur conservee entre les appels de fonctions, stockee dans la memoire "gloabl"
+	int static_local=0; //valeur conservee entre les appels de fonctions, stockee dans la memoire "global"
 	static_local++; //+return
 }
 

@@ -9,9 +9,15 @@ typedef struct vector_t {
 struct vector_t * init(int i, float f)
 {
     vector_t *vecteur = (vector_t *)malloc(sizeof(vector_t));
+    if(vecteur==NULL){
+    	exit(EXIT_FAILURE);
+    }
     vecteur->size = i;
     
     float *temp = (float *)malloc(sizeof(float));
+    if(temp==NULL){
+	exit(EXIT_FAILURE);
+    }
     
     int j;
     for(j=0; j<i; j++) {
