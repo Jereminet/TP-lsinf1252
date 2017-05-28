@@ -28,8 +28,8 @@ l'OS nous fait attendre plus de 5 sec, il va y avoir un problème.
 Le boolean global ne sert à rien car si on entre dans le read et qu’on 
 y reste plus de 5 secondes, on ne va pas revérifier la condition.
 
-La solution proposée par l'étudiant est correcte, meme si celle proposée
-dans le syllabus est meilleure (à base de longjmp).
+La solution proposée par l'étudiant est correcte mais ne regle pas le problème, la solution proposée
+dans le syllabus est donc meilleure (à base de longjmp).
 
 QUESTION 5:
 -----------
