@@ -4,7 +4,7 @@ La fonction signal permet d'assigner à une valeur de signal une certaine foncti
 Il renvoie l'ancien handler associé au signal passé en argument et associe au signal la fonction passé en 2e argument.
 Lorsqu'un processus recoit un signal, soit il l'ignore soit il fait qq chose,cad execute la fonction associé au handler.
 
-EX : Imaginons qu'au signal SIG_INT(=signum dans la fct signal) soit associé la méhode bar, alors l'appel à signal(SIG_INT,foo)
+EX : Imaginons qu'au signal SIG_INT(=signum dans la fct signal) soit associé la méthode bar, alors l'appel à signal(SIG_INT,foo)
 renvoie bar, et désormais la fonction handler associé à SIG_INT est foo.
 
 QUESTION 2:
