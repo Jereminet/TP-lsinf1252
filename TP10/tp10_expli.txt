@@ -75,8 +75,16 @@ le processus qui effectue l'appel.
 QUESTION 10:
 ------------
 
--l'OFO et son fd sont copiés pour le fils
--ils peuvent chacun lire de manière indépendante
--ils gardent les permissions qu'ils ont eu à l'ouverture du fichier, mais si le fichier est fermé et ré-ouvert, alors ils ne peuvent plus lire
--le père non mais le fils oui vu que le descripteur a été copié
--oui jusqu'à ce que le dernier lien vers ce fichier subsiste, après quoi le fichier est supprimé
+fd = open(fichier);
+
+-L’open file object est partagé entre le père et le fils.
+-Le père et le fils peuvent lire sur fd car ils ont le même open file object et il y a la permission pour read. Comme l’ofo n’est pas copié, l’offset avance en même temps pour les 2.
+-Ils pourront tous les deux lire car les permissions sont vérifiées à l’ouverture et ne sont plus vérifiées par après. Mais si le fichier est fermé et ré-ouvert, alors ils ne peuvent plus lire.
+-Le père ne peut plus lire mais le fils peut toujours car il y a juste la flèche du père qui disparaît.
+-Le père ne peut toujours pas lire. Le fils ne peut plus lire non plus. La flèche disparaît ainsi que le fichier (unlink() attend le dernier appel à close() pour supprimre définitivement le lien vers le fichier).
+
+ATTENTION : 
+-l'OFO et son fd sont copiés pour le fils => ca c'est dans le cas de 2 processus distincts qui ouvrent le meme fichier, mais pas pour un pere et son fils
+-ils peuvent chacun lire de manière indépendante => de nouveau, ok pour le cas de 2 processu =/= mais pas ok pour pere-fils
+
+
