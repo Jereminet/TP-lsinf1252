@@ -89,3 +89,18 @@ int main (int argc, char *argv[]) {
  }
  return(EXIT_SUCCESS);
 }
+
+
+/*
+jeremy@jeremy-N551VW:~/Documents/UCL/Info/revisions$ time cp my_file.txt file1.txt
+
+real	0m0.003s
+user	0m0.000s
+sys	0m0.000s
+
+jeremy@jeremy-N551VW:~/Documents/UCL/Info/revisions$ time ./cp2 my_file.txt file1.txt 
+
+real	0m0.002s //fichiers mappés plus rapides
+user	0m0.000s
+sys	0m0.000s
+*/
