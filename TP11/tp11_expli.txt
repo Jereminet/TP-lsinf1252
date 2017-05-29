@@ -10,13 +10,18 @@ QUESTION 2:
 Dans l'appel du fils, on ne reprécise pas le drapeau IPC_CREATE pcq ce processus a été créé précédemment.
 S_IRUSR et S_IWUSR sont des flags pour le même utilisateur, qui correspondent à la permission 600 alors que 
 celle du fils est de 400. Pour savoir si les demandes de permissions sont correctes, il suffit de faire l'opération
-logique bit par bit 600 & 400 = 400. Vu que le résultat équivaut à celui de l'appel demandant, c'est correct.
+logique bit par bit (*) 600 & 400 = 400. Vu que le résultat équivaut à celui de l'appel demandant, c'est correct.
 
 Le premier appel à shmat demande juste la lecture (soit 400) sur une page en permission 400 (celle du fils), il n'y a donc 
 aucun problème.
 Pour le suivant, on demande par shmat la permission pour exécuter la partie de mémoire partagée (permission 100) sur une
 page en permission 400. Si l'on procède en faisant 400 & 100 on obtient 0. La permission n'est pas similaire
 donc l'appel échoue.
+
+(*) : 600       : 110 000 000
+    & 400       & 100 000 000
+    -----       --------------
+      400         100 000 000
 
 QUESTION 1(bis):
 ----------------
