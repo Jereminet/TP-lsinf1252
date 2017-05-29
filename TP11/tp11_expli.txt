@@ -8,7 +8,7 @@ QUESTION 2:
 -----------
 
 Dans l'appel du fils, on ne reprécise pas le drapeau IPC_CREATE pcq ce processus a été créé précédemment.
-S_IRUSR et S_IWUSR sont des flags pour le groupe utilisateur, qui correspondent à la permission 600 alors que 
+S_IRUSR et S_IWUSR sont des flags pour le même utilisateur, qui correspondent à la permission 600 alors que 
 celle du fils est de 400. Pour savoir si les demandes de permissions sont correctes, il suffit de faire l'opération
 logique bit par bit 600 & 400 = 400. Vu que le résultat équivaut à celui de l'appel demandant, c'est correct.
 
