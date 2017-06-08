@@ -19,7 +19,7 @@ Une page fait 1024 bytes = 2¹⁰ bytes et les adresses sont encodées sur 13 bi
 Besoin de 10 bits pour representer une adresse (=l'offset) et les 3 premiers referencent donc
 à l'indice de la page.
 
-Imaginons que la table utilise 8 bytes(=2³) et pas 1024, on aura donc besoin de 3 bits pour
+Imaginons que la table utilise 8 bytes(=2³) pour représenter une page et pas 1024 bytes, on aura donc besoin de 3 bits pour
 representer l'adresse et 10 bits pour l'indice de la page.
 
 Par la table, on sait que pour
