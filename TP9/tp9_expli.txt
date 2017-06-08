@@ -94,6 +94,7 @@ EIO, erreur d'entrée/sortie standard.
 QUESTION 13:
 -----------
 
-Ecriture sur le disque seulement quand le buffer est rempli, après quoi il est vidé.
+Force l'écriture sur le disque des données actuellement dans le buffer, après quoi il est vidé.
+fsync() fait la même chose mais uniquement pour les données correspondantes au fd passé en argument.
 
 Très utile dans le cas d'une clef USB.
