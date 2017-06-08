@@ -36,7 +36,7 @@ QUESTION 2(bis):
 -----------
 
 Si le stockage en mémoire se fait de manière contigue, il faut prendre l'adresse de départ et y ajouter
-n*l'offset pour accéder au n-ième élément. Cela revient quasiment à utiliser un tableau, sans l'aspect
+n*taille d'une page+l'offset pour accéder au n-ième élément. Cela revient quasiment à utiliser un tableau, sans l'aspect
 dynamique.
 
 Dans cette procédure, on ne peut donc pas utiliser shmat avec NULL.
