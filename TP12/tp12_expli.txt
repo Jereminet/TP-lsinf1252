@@ -1,10 +1,10 @@
 QUESTION 1:
 -----------
 
-513*63 = 2¹⁵ bytes par piste
+512*63 = 2¹⁵ bytes par piste
 7200 pistes lues par minute, soit 120 pistes par seconde
 
-On a donc 2¹⁵ bytes/piste * 120 piste/sec = 3*10⁶ bytes/sec, soit 3MBytes/sec
+On a donc 2¹⁵ bytes/piste * 120 piste/sec = 3*10⁶ bytes/sec, soit 3MBytes/sec (3.8MBytes exactement)
 
 On nous dit qu'on peut aller jusque 300 MBytes/sec alors qu'on trouve seulement 3MB/s. Cela
 s'explique parce qu'on ne prend pas en compte le cache.
